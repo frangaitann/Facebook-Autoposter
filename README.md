@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 I'm not responsable of the use that the user gives to this script, it's fully responsability of the user and/or the person that executes the script.
 For any questions or help needed you can contact me at:
 Discord @frangaita.n or https://discord.gg/Q2KuwbXaJc
