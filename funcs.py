@@ -3,6 +3,13 @@ from imports import *
 
 # WORKING FUNCTIONS
 
+group_error = []
+meth1 = 0
+meth2 = 0
+counter = 1
+ok_counter= 0
+
+
 def textpaster(driver):
     post2 = WebDriverWait(driver, 8).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[2]/div[1]/div[1]/div[1]/div[1]/div/div/div[1]/p")))
     #print("text box found")
@@ -11,44 +18,47 @@ def textpaster(driver):
 
 
 
-def text1(driver):
-    textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Foto/vídeo') or contains(text(), 'Photo/video') or contains(text(), 'Write something...')]")))
-    textbox.click()
+def text_past(driver, clean_group):
+    try:
+        textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Foto/vídeo') or contains(text(), 'Photo/video') or contains(text(), 'Write something...')]")))
+        textbox.click()
+    except (NoSuchElementException, TimeoutException, ElementClickInterceptedException):
+        try:
+            textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/div/div[1]/span")))
+            textbox.click()
+        except:
+            print("Error trying to post in {group_name_clean} (group number {counter}), NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear en {group_name_clean} (grupo numero {counter}), ELEMENTO NO ENCONTRADO")
+            group_error.append(clean_group)
+            counter += 1
 
 
 
-def text2(driver):
-    textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/div/div[1]/span")))
-    textbox.click()
+def picbox(driver):
+    try:
+        pic_box = driver.find_element(By.XPATH, '//form[@method="POST"]//input[@type="file"]')
+        #print("method 1 pic box found")
 
+        pic_box.send_keys(image())
+        #print("METHOD1")
+        time.sleep(1.5)
+    except:
+            #JUST WITH GUI ON / --headless OFF
 
+            driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[3]/div[1]/div[2]/div[1]/div/span/div/div/div[1]/div/div/div[1]/img").click()
+            #print("method 2 pic button found, opening file dialog)
 
-def picbox1(driver):
-    pic_box = driver.find_element(By.XPATH, '//form[@method="POST"]//input[@type="file"]')
-    #print("method 1 pic box found")
+            dlg = Desktop(backend="win32").window(title_re=".*Abrir.*")
+            dlg.wait("ready")
 
-    pic_box.send_keys(image())
-    #print("METHOD1")
-    time.sleep(1.5)
+            buttons = dlg.descendants(class_name="Button")
 
+            dlg.child_window(class_name="Edit", found_index=0).set_edit_text(r"C:\Users\franc\OneDrive\Desktop\Cosas\Programacion\Autobook Cookie\imagen.jpg")
 
-#Just with GUI ON
-def picbox2(driver):
-    driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[3]/div[1]/div[2]/div[1]/div/span/div/div/div[1]/div/div/div[1]/img").click()
-    #print("method 2 pic button found, opening file dialog)
-
-    dlg = Desktop(backend="win32").window(title_re=".*Abrir.*")
-    dlg.wait("ready")
-
-    buttons = dlg.descendants(class_name="Button")
-
-    dlg.child_window(class_name="Edit", found_index=0).set_edit_text(r"C:\Users\franc\OneDrive\Desktop\Cosas\Programacion\Autobook Cookie\imagen.jpg")
-
-    time.sleep(1.5)
-    buttons[0].click()
-    time.sleep(2)
-
-    #print("METHOD2")
+            time.sleep(1.5)
+            buttons[0].click()
+            time.sleep(2)
+            meth2+=1
+            #print("METHOD2")
 
 
 

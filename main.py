@@ -1,5 +1,6 @@
 from imports import *
 from funcs import *
+import funcs
 
 # AGREGAR: Tupla de Funciones (Distintas funciones para hacer todo el mismo proceso de "Abrir el postbox, pegar el texto, pegar la foto y publicar" De esta forma el codigo se adapta a cada meotodo anti-bots de facebook)
 
@@ -32,13 +33,8 @@ def main():
     time.sleep(2)
 
     # Post on each group
-    counter = 1
-    ok_counter= 0
     group_list_raw = groups()
     group_list = [g.strip() for g in group_list_raw if g.strip() and "facebook.com/groups/" in g]
-    group_error = []
-    meth1 = 0
-    meth2 = 0
 
     for group in group_list:
         try:
@@ -49,63 +45,41 @@ def main():
             print(f"""
         
         
-            Working with {group_name_clean} group number {counter}""")
+            Working with {group_name_clean} group number {funcs.counter}""")
             driver.get(group)
 
-            try:
-                text1(driver)
-
-            except (NoSuchElementException, TimeoutException):
-                try:
-                    text2(driver)
-
-                except (NoSuchElementException, TimeoutException, ElementClickInterceptedException):
-                    print(f"""
-            
-            
-
-                    Error trying to post in {group_name_clean} (group number {counter}), NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear en {group_name_clean} (grupo numero {counter}), ELEMENTO NO ENCONTRADO""")
-                    group_error.append(clean_group)
-                    counter += 1
+            text_past(driver, clean_group)
 
             try:
                 textpaster(driver)
-
-                try:
-                    picbox1(driver)
-                    meth1+=1
-
-                except (NoSuchElementException, TimeoutException):
-                    picbox2(driver)
-                    meth2+=1
-
+                picbox(driver)
                 postbutton(driver)
 
                 print(f"posted {counter}/{len(group_list)}")
 
-                counter += 1
-                ok_counter += 1
+                funcs.counter += 1
+                funcs.ok_counter += 1
             except Exception as exc:
                 print("An unexpected error happened while posting, skipping group | Un error inesperado ocurrió mientras se intentó postear, omitiendo grupo")
                 print(f"ERROR: {exc}")
-                counter += 1
+                funcs.counter += 1
 
         except InvalidArgumentException:
             print(f"""
             
             
 
-            Error trying to post in {group} (group number {counter}), INVALID URL""")
+            Error trying to post in {group} (group number {funcs.counter}), INVALID URL""")
             group_error.append(group)
 
 
     # Close driver
 
     print("End")
-    counter -=1
-    print(f"Posted on {ok_counter} of {counter}, Method 1 was used {meth1} times and Method 2 {meth2}")
+    funcs.counter -=1
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, Method 1 was used {meth1} times and Method 2 {meth2}")
 
-    if ok_counter != counter:
+    if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")
         for i in group_error:
             print(i)
