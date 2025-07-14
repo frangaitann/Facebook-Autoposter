@@ -3,6 +3,7 @@ from funcs import *
 import funcs
 
 # AGREGAR: Tupla de Funciones (Distintas funciones para hacer todo el mismo proceso de "Abrir el postbox, pegar el texto, pegar la foto y publicar" De esta forma el codigo se adapta a cada meotodo anti-bots de facebook)
+# AGREGAR: Modificar el texto "Posted X/X" por "Poster X/X | Time Took = X.XX Secs"
 
 # FUNCIONA
 
@@ -21,6 +22,8 @@ def main():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
 
+    webdriver_stealth(driver)
+    driver.set_window_size(1980, 935)
     print("Starting Facebook")
     driver.get('https://www.facebook.com')
 
@@ -28,9 +31,10 @@ def main():
     cookies(driver)
 
     #Choose Sub-Profile
+    scroller(driver)
     prof_chooser(driver)
     print("...")
-    time.sleep(2)
+    randomizer_t()
 
     # Post on each group
     group_list_raw = groups()
@@ -48,6 +52,7 @@ def main():
             Working with {group_name_clean} group number {funcs.counter}""")
             driver.get(group)
 
+            scroller(driver)
             text_past(driver, clean_group)
 
             try:

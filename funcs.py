@@ -10,26 +10,52 @@ counter = 1
 ok_counter= 0
 
 
+def webdriver_stealth(driver):
+    driver.execute_cdp_cmd(
+    "Page.addScriptToEvaluateOnNewDocument",
+    {
+        "source": """
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            })
+        """
+    },)
+
+def scroller(driver):
+    driver.execute_script(f"window.scrollTo(0, {random.uniform(23, 732)});")
+
+
+def randomizer_t():
+    randomizer_num = random.uniform(4, 34)
+    print(f"T = {randomizer_num}")
+    time.sleep(randomizer_num)
+
+
 def textpaster(driver):
     post2 = WebDriverWait(driver, 8).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[2]/div[1]/div[1]/div[1]/div[1]/div/div/div[1]/p")))
     #print("text box found")
 
     post2.send_keys(text())
+    randomizer_t()
 
 
 
 def text_past(driver, clean_group):
+    randomizer_t()
     try:
-        textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Foto/vídeo') or contains(text(), 'Photo/video') or contains(text(), 'Write something...')]")))
+        textbox = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Foto/vídeo') or contains(text(), 'Photo/video') or contains(text(), 'Write something...')]")))
         textbox.click()
+        randomizer_t()
     except (NoSuchElementException, TimeoutException, ElementClickInterceptedException):
         try:
-            textbox = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/div/div[1]/span")))
+            textbox = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/div/div[1]/span")))
             textbox.click()
+            randomizer_t()
         except:
             print("Error trying to post in {group_name_clean} (group number {counter}), NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear en {group_name_clean} (grupo numero {counter}), ELEMENTO NO ENCONTRADO")
             group_error.append(clean_group)
             counter += 1
+            randomizer_t()
 
 
 
@@ -40,7 +66,7 @@ def picbox(driver):
 
         pic_box.send_keys(image())
         #print("METHOD1")
-        time.sleep(1.5)
+        randomizer_t()
     except:
             #JUST WITH GUI ON / --headless OFF
 
@@ -54,9 +80,9 @@ def picbox(driver):
 
             dlg.child_window(class_name="Edit", found_index=0).set_edit_text(r"C:\Users\franc\OneDrive\Desktop\Cosas\Programacion\Autobook Cookie\imagen.jpg")
 
-            time.sleep(1.5)
+            randomizer_t()
             buttons[0].click()
-            time.sleep(2)
+            randomizer_t()
             meth2+=1
             #print("METHOD2")
 
@@ -69,7 +95,7 @@ def postbutton(driver):
     post_button.click()
     #print("post button clicked")
 
-    time.sleep(4)
+    randomizer_t()
 
 
 # LOADING FUNCTIONS
@@ -78,7 +104,7 @@ def opt():
     #print("Options Loaded")
     options = Options() 
     options.add_argument("--log-level=3")
-    options.add_argument("--headless")          # Se puede desactivar para testing
+    options.add_argument("--headless=new")      # Se puede desactivar para testing
     options.add_argument("--disable-gpu")       # Se puede desactivar para testing
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-search-engine-choice-screen")

@@ -13,4 +13,5 @@ import os
 import glob
 import time
 import pickle
+import random
 from pywinauto import Desktop
