@@ -4,8 +4,8 @@ import funcs
 
 # AGREGAR: Tupla de Funciones (Distintas funciones para hacer todo el mismo proceso de "Abrir el postbox, pegar el texto, pegar la foto y publicar" De esta forma el codigo se adapta a cada meotodo anti-bots de facebook)
 # AGREGAR: Modificar el texto "Posted X/X" por "Poster X/X | Time Took = X.XX Secs"
-
-# FUNCIONA
+# AGREGAR: Darle varías fotos, poder elegir si postear todas o que sean opción a intercambiar (que elija una random entre esas), que el script detecte la cantidad EJ: 4 y saque un numero del 1 al 4 para elegir que foto usar y asi evitar detectar la automatización
+# AGREGAR: Lo mismo que arriba pero con el texto, dentro del mismo .txt poner varios copys separados por "" u otro simbolo el cual sea el separador Y/O hacer cambios en un unico texto para evitar la detección, podria hacerse agregando tildes donde no van (queda poco profesional), cambiando los espacios, borrando algunas palabras o incluso integrando ChatGPT para darle como prompt el copy y pedirle que lo cambie
 
 def main():
     #loading chrome & facebook
@@ -60,7 +60,7 @@ def main():
                 picbox(driver)
                 postbutton(driver)
 
-                print(f"posted {counter}/{len(group_list)}")
+                print(f"posted {funcs.counter}/{len(group_list)}")
 
                 funcs.counter += 1
                 funcs.ok_counter += 1
@@ -69,7 +69,7 @@ def main():
                 print(f"ERROR: {exc}")
                 funcs.counter += 1
 
-        except InvalidArgumentException:
+        except:
             print(f"""
             
             

@@ -52,7 +52,7 @@ def text_past(driver, clean_group):
             textbox.click()
             randomizer_t()
         except:
-            print("Error trying to post in {group_name_clean} (group number {counter}), NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear en {group_name_clean} (grupo numero {counter}), ELEMENTO NO ENCONTRADO")
+            print("Error trying to post, NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear, ELEMENTO NO ENCONTRADO")
             group_error.append(clean_group)
             counter += 1
             randomizer_t()
@@ -60,6 +60,8 @@ def text_past(driver, clean_group):
 
 
 def picbox(driver):
+    global meth2
+
     try:
         pic_box = driver.find_element(By.XPATH, '//form[@method="POST"]//input[@type="file"]')
         #print("method 1 pic box found")
