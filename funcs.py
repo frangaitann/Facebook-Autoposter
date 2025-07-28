@@ -26,7 +26,7 @@ def scroller(driver):
 
 
 def randomizer_t():
-    randomizer_num = random.uniform(4, 34)
+    randomizer_num = random.uniform(2.5, 24)
     print(f"T = {randomizer_num}")
     time.sleep(randomizer_num)
 
