@@ -255,16 +255,16 @@ def groups():
 
 def prof_chooser(driver):
     
-
-    anti_bot = driver.find_element(By.XPATH, "//div[contains(text(), 'Haz clic en tu foto o añade una cuenta.')]")
-    if anti_bot:
+    try:
+        WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//div[contains(text(), 'Haz clic en tu foto o añade una cuenta.')]")))
         print("Old login info loaded, need to login again")
         filepath = os.path.join(os.getcwd(), "cookies.pkl")
         os.remove(filepath)
         driver.delete_all_cookies()
         driver.refresh()
         cookies(driver)
-        
+    except:
+        pass
     
     try:
         main_profile = WebDriverWait(driver, 600).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Your profile']")))
