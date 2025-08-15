@@ -26,7 +26,7 @@ def scroller(driver):
 
 
 def randomizer_t():
-    randomizer_num = random.uniform(2.5, 24)
+    randomizer_num = random.uniform(4, 34)
     print(f"T = {randomizer_num}")
     time.sleep(randomizer_num)
 
@@ -52,7 +52,7 @@ def text_past(driver, clean_group):
             textbox.click()
             randomizer_t()
         except:
-            print("Error trying to post, NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN | Error al intentar postear, ELEMENTO NO ENCONTRADO")
+            print("Error trying to post, NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN")
             group_error.append(clean_group)
             counter += 1
             randomizer_t()
@@ -70,23 +70,7 @@ def picbox(driver):
         #print("METHOD1")
         randomizer_t()
     except:
-            #JUST WITH GUI ON / --headless OFF
-
-            driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[3]/div[1]/div[2]/div[1]/div/span/div/div/div[1]/div/div/div[1]/img").click()
-            #print("method 2 pic button found, opening file dialog)
-
-            dlg = Desktop(backend="win32").window(title_re=".*Abrir.*")
-            dlg.wait("ready")
-
-            buttons = dlg.descendants(class_name="Button")
-
-            dlg.child_window(class_name="Edit", found_index=0).set_edit_text(r"C:\Users\franc\OneDrive\Desktop\Cosas\Programacion\Autobook Cookie\imagen.jpg")
-
-            randomizer_t()
-            buttons[0].click()
-            randomizer_t()
-            meth2+=1
-            #print("METHOD2")
+        print("VAR ERROR: pic_box not working.")
 
 
 
@@ -119,7 +103,7 @@ def opt():
 
 def cookies(driver):
     if "cookies.pkl" in os.listdir():
-        print("Cookies found, no manual login")
+        #print("Cookies found, no manual login")
 
         cookies = pickle.load(open("cookies.pkl", "rb"))
         for i in cookies:
@@ -144,7 +128,7 @@ def cookies(driver):
     else:
         try:
             WebDriverWait(driver, 80).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div[1]/span")))
-            print(driver.get_cookies())
+            #print(driver.get_cookies())
             cookies = driver.get_cookies()
 
             formatted_cookies = []
@@ -164,11 +148,11 @@ def cookies(driver):
             #orden cookies: domain, expiry, httponly, name, path, samesite, secure, value
 
         except selenium.common.exceptions.TimeoutException:
-            print("El usuario no inició sesión")
+            print("User must have logged in, execute again and login for starting correctly.")
 
 
 def image():
-    print("Looking for images... / Buscando Imagenes...")
+    print("Looking for images...")
 
     file_types = ('*.jpg', '*.png', '*.gif', '*.mp4', '*.wav', '*.webm')
 
@@ -181,19 +165,19 @@ def image():
             
             if files:
                 image = files[0]
-                print("Image found / Imagén Encontrada")
+                print("Image found")
                 return image
             
             else:
-                print("Not image was found / No se encontró ninguna imagén")
+                print("Not image was found")
 
     except:
-        print("ERROR LOADING/SEARCHING FOR IMAGE | ERROR AL CARGAR/AL BUSCAR IMAGENES")
+        print("ERROR LOADING/SEARCHING AN IMAGE")
 
 
 def text():
 
-    print("loading message / Cargando Mensaje")
+    print("loading message")
 
     try:
         text_file = open("mensaje.txt", 'r', encoding="utf8")
@@ -211,10 +195,7 @@ def text():
         except FileNotFoundError:
             if os.name == "nt":
                 os.system("cls")
-                print('The Text (.txt) file with the message must be named as "mensaje" or "msg" / El archivo de texto (.txt) con el mensaje a postear debe llamarse "mensaje" o "msg"')
-            else:
-                os.system("clear")
-                print('The Text (.txt) file with the message must be named as "mensaje" or "msg" / El archivo de texto (.txt) con el mensaje a postear debe llamarse "mensaje" o "msg"')
+                print('The Text (.txt) file with the message must be named as "mensaje" or "msg""')
 
 
 def groups():
@@ -273,8 +254,23 @@ def groups():
 
 
 def prof_chooser(driver):
-    main_profile = WebDriverWait(driver, 90).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Your profile']")))
-    main_profile.click()
+    
+
+    anti_bot = driver.find_element(By.XPATH, "//div[contains(text(), 'Haz clic en tu foto o añade una cuenta.')]")
+    if anti_bot:
+        print("Old login info loaded, need to login again")
+        filepath = os.path.join(os.getcwd(), "cookies.pkl")
+        os.remove(filepath)
+        driver.delete_all_cookies()
+        driver.refresh()
+        cookies(driver)
+        
+    
+    try:
+        main_profile = WebDriverWait(driver, 600).until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Your profile']")))
+        main_profile.click()
+    except:
+        print("Time Out: Facebook took too long to load, try again.")
 
     try:
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//div[@role='list']")))
@@ -282,26 +278,13 @@ def prof_chooser(driver):
         profiles_name = ["Mantener el perfil actual"]
         profiles_list = driver.find_elements(By.XPATH, "//div[contains(@aria-label, 'Switch to')]")
 
-        profiles_name = ["Mantener el perfil actual"]
+        profiles_name = ["Keep current profile"]
         profiles_name.extend([i.text for i in profiles_list])
 
-        print(profiles_name)
-        print(len(profiles_name))
+        #print(profiles_name)
+        #print(len(profiles_name))
 
-        print("""
-
-
-
-
-        
-
-
-    
-
-        """)
-
-
-        print("Choose the profile using the number of the profile/Elige el perfil usando el numero detras del nombre:")
+        print("\n\n\n\n\n\nChoose the profile using the number of the profile: ")
         prof_counter = 0
         for i in profiles_name:
             print(f"{prof_counter}- {i}")
@@ -316,8 +299,8 @@ def prof_chooser(driver):
         elif int(choice) == 0:
             print(".")
         else:
-            print("Please select a valid option number... / Porfavor selecciona una opción valida...")
+            print("Please select a valid option number...")
             prof_chooser()
 
     except:
-        print("No extra profiles were found, keeping the actual one... / No se encontraron otros perfiles, continuando con el perfil actual...")
+        print("No extra profiles were found, keeping the current one.")
