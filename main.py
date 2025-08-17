@@ -7,6 +7,10 @@ import funcs
 # AGREGAR: Darle varías fotos, poder elegir si postear todas o que sean opción a intercambiar (que elija una random entre esas), que el script detecte la cantidad EJ: 4 y saque un numero del 1 al 4 para elegir que foto usar y asi evitar detectar la automatización
 # AGREGAR: Lo mismo que arriba pero con el texto, dentro del mismo .txt poner varios copys separados por "" u otro simbolo el cual sea el separador Y/O hacer cambios en un unico texto para evitar la detección, podria hacerse agregando tildes donde no van (queda poco profesional), cambiando los espacios, borrando algunas palabras o incluso integrando ChatGPT para darle como prompt el copy y pedirle que lo cambie
 # QUITAR:  Información sensible MIA para poder publicar el repositorio debidamente
+# AUTOMATIZAR: Se puede hacer lo mismo que este codigo pero que elija el perfil automaticamente y asi iniciar el script a traves de un .bat diariamente
+# AGREGAR: Utilidad para Linux (Parcial)
+
+#V 1.4.0
 
 
 def main():
@@ -17,7 +21,7 @@ def main():
     else:
         os.system("clear")
 
-    print("Starting Chrome")
+    print("Starting script")
 
     options = opt()
 
@@ -26,8 +30,23 @@ def main():
 
     webdriver_stealth(driver)
     driver.set_window_size(1980, 935)
-    print("Starting Facebook")
+    #print("Starting web")
+    
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+    
     driver.get('https://www.facebook.com')
+    
+    print("""  ______    _        _____                                           
+ |  ____|  | |      / ____|                                          
+ | |__ __ _| |__   | (___  _ __   __ _ _ __ ___  _ __ ___   ___ _ __ 
+ |  __/ _` | '_ \   \___ \| '_ \ / _` | '_ ` _ \| '_ ` _ \ / _ \ '__|
+ | | | (_| | |_) |  ____) | |_) | (_| | | | | | | | | | | |  __/ |   
+ |_|  \__,_|_.__/  |_____/| .__/ \__,_|_| |_| |_|_| |_| |_|\___|_|   
+                          | |                                        
+                          |_|                                           V 1.4.0""")
 
     #print("Driver Funct")
     cookies(driver)
@@ -84,7 +103,7 @@ def main():
 
     print("End")
     funcs.counter -=1
-    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, Method 1 was used {meth1} times and Method 2 {meth2}")
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}")
 
     if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")

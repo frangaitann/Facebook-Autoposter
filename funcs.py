@@ -4,8 +4,6 @@ from imports import *
 # WORKING FUNCTIONS
 
 group_error = []
-meth1 = 0
-meth2 = 0
 counter = 1
 ok_counter= 0
 
@@ -60,7 +58,6 @@ def text_past(driver, clean_group):
 
 
 def picbox(driver):
-    global meth2
 
     try:
         pic_box = driver.find_element(By.XPATH, '//form[@method="POST"]//input[@type="file"]')
@@ -90,8 +87,8 @@ def opt():
     #print("Options Loaded")
     options = Options() 
     options.add_argument("--log-level=3")
-    options.add_argument("--headless=new")      # Se puede desactivar para testing
-    options.add_argument("--disable-gpu")       # Se puede desactivar para testing
+    options.add_argument("--headless=new")      # Can be commented for debuging
+    options.add_argument("--disable-gpu")       # Can be commented for debuging
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-search-engine-choice-screen")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -172,7 +169,7 @@ def image():
                 print("Not image was found")
 
     except:
-        print("ERROR LOADING/SEARCHING AN IMAGE")
+        print("ERROR LOADING OR LOOKING FOR AN IMAGE")
 
 
 def text():
@@ -199,12 +196,12 @@ def text():
 
 
 def groups():
-    print("loading groups... / Cargando Grupos...")
+    print("loading groups...")
 
     try:
         with open("grupos.txt", 'r', encoding="utf8") as groups_file:
             groups = groups_file.readlines()
-            print(f"{len(groups)} groups loaded / {len(groups)} grupos cargados")
+            print(f"{len(groups)} groups loaded")
             
             if not groups: 
                 print("No text was found in the text file") 
@@ -274,10 +271,8 @@ def prof_chooser(driver):
 
     try:
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//div[@role='list']")))
-
-        profiles_name = ["Mantener el perfil actual"]
+        
         profiles_list = driver.find_elements(By.XPATH, "//div[contains(@aria-label, 'Switch to')]")
-
         profiles_name = ["Keep current profile"]
         profiles_name.extend([i.text for i in profiles_list])
 
