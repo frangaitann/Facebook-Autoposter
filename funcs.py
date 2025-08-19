@@ -9,6 +9,8 @@ ok_counter= 0
 total_t = 0
 
 
+
+
 def webdriver_stealth(driver):
     driver.execute_cdp_cmd(
     "Page.addScriptToEvaluateOnNewDocument",
@@ -208,7 +210,9 @@ def text():
         except FileNotFoundError:
             if os.name == "nt":
                 os.system("cls")
-                print('The Text (.txt) file with the message must be named as "mensaje" or "msg""')
+            else:
+                os.system("clear")
+            print('The Text (.txt) file with the message must be named as "mensaje" or "msg""')
 
 
 def groups():
@@ -240,20 +244,19 @@ def groups():
         except FileNotFoundError:
             if os.name == "nt":
                 os.system("cls")
-                print('the groups file must be named "grupos" or "groups" for being located') 
             else:
                 os.system("clear")
-                print('the data file must be named "grupos" or "groups" for being located') 
+            print('the groups file must be named "grupos" or "groups" for being located') 
 
         except Exception as e: 
             if os.name == "nt":
                 os.system("cls")
                 print(f"An error occurred: {e}") 
                 return []
-        else:
-            os.system("clear")
-            print(f"An error occurred: {e}") 
-            return []
+            else:
+                os.system("clear")
+                print(f"An error occurred: {e}") 
+                return []
     
     except Exception as e: 
         if os.name == "nt":

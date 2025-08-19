@@ -7,7 +7,7 @@ import funcs
 # ADD: Linux support
 # AUTOMATE: This code can be reworked for automatic profile selection and auto-executing with .bat file (for avoiding manual execution)
 
-#V 1.4.3
+#V 1.4.5
 
 
 def main():
@@ -79,6 +79,7 @@ def main():
                 t4 = postbutton(driver) #this has randomizer()
                 
                 t = t1 + t2 + t3 + t4
+                t = round(t, 2)
 
                 print(f"posted {funcs.counter}/{len(group_list)} in {t} seconds")
 
