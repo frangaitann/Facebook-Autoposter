@@ -2,15 +2,12 @@ from imports import *
 from funcs import *
 import funcs
 
-# AGREGAR: Tupla de Funciones (Distintas funciones para hacer todo el mismo proceso de "Abrir el postbox, pegar el texto, pegar la foto y publicar" De esta forma el codigo se adapta a cada meotodo anti-bots de facebook)
-# AGREGAR: Modificar el texto "Posted X/X" por "Poster X/X | Time Took = X.XX Secs"
-# AGREGAR: Darle varías fotos, poder elegir si postear todas o que sean opción a intercambiar (que elija una random entre esas), que el script detecte la cantidad EJ: 4 y saque un numero del 1 al 4 para elegir que foto usar y asi evitar detectar la automatización
-# AGREGAR: Lo mismo que arriba pero con el texto, dentro del mismo .txt poner varios copys separados por "" u otro simbolo el cual sea el separador Y/O hacer cambios en un unico texto para evitar la detección, podria hacerse agregando tildes donde no van (queda poco profesional), cambiando los espacios, borrando algunas palabras o incluso integrando ChatGPT para darle como prompt el copy y pedirle que lo cambie
-# QUITAR:  Información sensible MIA para poder publicar el repositorio debidamente
-# AUTOMATIZAR: Se puede hacer lo mismo que este codigo pero que elija el perfil automaticamente y asi iniciar el script a traves de un .bat diariamente
-# AGREGAR: Utilidad para Linux (Parcial)
+# ADD: Be able to use more than 1 pic and select randomly between those pictures per post (for avoiding anti-bots system)
+# ADD: Same of above but with text, being able to put many copys on the .txt file OR making changes to one text by AI
+# ADD: Linux support
+# AUTOMATE: This code can be reworked for automatic profile selection and auto-executing with .bat file (for avoiding manual execution)
 
-#V 1.4.0
+#V 1.4.3
 
 
 def main():
@@ -55,7 +52,7 @@ def main():
     scroller(driver)
     prof_chooser(driver)
     print("...")
-    randomizer_t()
+    time.sleep(randomizer_t())
 
     # Post on each group
     group_list_raw = groups()
@@ -74,19 +71,22 @@ def main():
             driver.get(group)
 
             scroller(driver)
-            text_past(driver, clean_group)
+            t1 = text_past(driver, clean_group) #this has randomizer()
 
             try:
-                textpaster(driver)
-                picbox(driver)
-                postbutton(driver)
+                t2 = textpaster(driver) #this has randomizer()
+                t3 = picbox(driver) #this has randomizer()
+                t4 = postbutton(driver) #this has randomizer()
+                
+                t = t1 + t2 + t3 + t4
 
-                print(f"posted {funcs.counter}/{len(group_list)}")
+                print(f"posted {funcs.counter}/{len(group_list)} in {t} seconds")
 
                 funcs.counter += 1
                 funcs.ok_counter += 1
+                funcs.total_t += t
             except Exception as exc:
-                print("An unexpected error happened while posting, skipping group | Un error inesperado ocurrió mientras se intentó postear, omitiendo grupo")
+                print(f"An unexpected error happened while posting, skipping group.")
                 print(f"ERROR: {exc}")
                 funcs.counter += 1
 
@@ -95,22 +95,24 @@ def main():
             
             
 
-            Error trying to post in {group} (group number {funcs.counter}), INVALID URL""")
+            Error trying to post in {group} (group number {funcs.counter}), INVALID URL.""")
             group_error.append(group)
 
 
     # Close driver
+    
+    driver.close()
 
     print("End")
     funcs.counter -=1
-    print(f"Posted on {funcs.ok_counter} of {funcs.counter}")
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {funcs.total_t}s")
 
     if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")
         for i in group_error:
             print(i)
-
-    driver.close()
+    
+    getpass.getpass("<< Hit Enter for closing script window >>")
     
 if __name__ == "__main__":
     main()

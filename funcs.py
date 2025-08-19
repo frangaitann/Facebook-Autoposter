@@ -6,6 +6,7 @@ from imports import *
 group_error = []
 counter = 1
 ok_counter= 0
+total_t = 0
 
 
 def webdriver_stealth(driver):
@@ -25,8 +26,8 @@ def scroller(driver):
 
 def randomizer_t():
     randomizer_num = random.uniform(4, 34)
-    print(f"T = {randomizer_num}")
-    time.sleep(randomizer_num)
+    #print(f"T = {randomizer_num}")
+    return randomizer_num
 
 
 def textpaster(driver):
@@ -34,26 +35,37 @@ def textpaster(driver):
     #print("text box found")
 
     post2.send_keys(text())
-    randomizer_t()
+    t = randomizer_t()
+    time.sleep(t)
+    return t
 
 
 
 def text_past(driver, clean_group):
-    randomizer_t()
+    t1 = randomizer_t()
+    time.sleep(t1)
     try:
         textbox = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Foto/vídeo') or contains(text(), 'Photo/video') or contains(text(), 'Write something...')]")))
         textbox.click()
-        randomizer_t()
+        t2 = randomizer_t()
+        time.sleep(t2)
     except (NoSuchElementException, TimeoutException, ElementClickInterceptedException):
         try:
             textbox = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/div/div[1]/span")))
             textbox.click()
-            randomizer_t()
+            t2 = randomizer_t()
+            time.sleep(t2)
         except:
             print("Error trying to post, NO ELEMENT FOUND / PROGRAM TOOK TO MUCH TIME, TRY AGAIN")
             group_error.append(clean_group)
             counter += 1
-            randomizer_t()
+            t2 = randomizer_t()
+            time.sleep(t2)
+            
+    t = t1 + t2
+    return t
+            
+            
 
 
 
@@ -65,7 +77,9 @@ def picbox(driver):
 
         pic_box.send_keys(image())
         #print("METHOD1")
-        randomizer_t()
+        t = randomizer_t()
+        time.sleep(t)
+        return t
     except:
         print("VAR ERROR: pic_box not working.")
 
@@ -78,7 +92,9 @@ def postbutton(driver):
     post_button.click()
     #print("post button clicked")
 
-    randomizer_t()
+    t = randomizer_t()
+    time.sleep(t)
+    return t
 
 
 # LOADING FUNCTIONS
