@@ -106,7 +106,7 @@ def main():
 
     print("End")
     funcs.counter -=1
-    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {round(funcs.total_t)}s")
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {round(funcs.total_tmin)} minutes")
 
     if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")
