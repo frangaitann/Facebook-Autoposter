@@ -7,7 +7,7 @@ import funcs
 # ADD: Linux support
 # AUTOMATE: This code can be reworked for automatic profile selection and auto-executing with .bat file (for avoiding manual execution)
 
-#V 1.4.5
+#V 1.4.6
 
 
 def main():
@@ -106,7 +106,7 @@ def main():
 
     print("End")
     funcs.counter -=1
-    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {funcs.total_t}s")
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {round(funcs.total_t)}s")
 
     if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")
