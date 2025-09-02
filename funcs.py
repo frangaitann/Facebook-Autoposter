@@ -7,9 +7,11 @@ group_error = []
 counter = 1
 ok_counter= 0
 total_t = 0
-total_tmin = total_t/60
 
 
+def minuter(total_t):
+    min = total_t/60
+    return min
 
 
 def webdriver_stealth(driver):

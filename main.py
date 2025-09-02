@@ -43,7 +43,7 @@ def main():
  | | | (_| | |_) |  ____) | |_) | (_| | | | | | | | | | | |  __/ |   
  |_|  \__,_|_.__/  |_____/| .__/ \__,_|_| |_| |_|_| |_| |_|\___|_|   
                           | |                                        
-                          |_|                                           V 1.4.0""")
+                          |_|                                           V 1.4.1""")
 
     #print("Driver Funct")
     cookies(driver)
@@ -106,7 +106,7 @@ def main():
 
     print("End")
     funcs.counter -=1
-    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {round(funcs.total_tmin)} minutes")
+    print(f"Posted on {funcs.ok_counter} of {funcs.counter}, lasted {round(minuter())} minutes")
 
     if funcs.ok_counter != funcs.counter:
         print("Groups that gave error were:")
