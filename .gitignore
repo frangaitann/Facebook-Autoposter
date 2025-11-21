@@ -1,8 +1,11 @@
+### Virtual Environment, Cache files & Others
+
 venv/
 __pycache__/
 *.pyc
+/EJECUTABLE/
 
-
+### CREDENTIALS OR SENSITIVE DATA ###
 *.env
 *.csv
 msg.txt

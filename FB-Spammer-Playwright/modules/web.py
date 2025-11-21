@@ -166,6 +166,7 @@ async def paster(page, DEBUG:bool = False):
             t = float(f"{t:.2f}")
             time.append(t)
             
+        total_time= sum(time)
         try:
             print(f"\n\n[{await timestamp()}] Working with group n°{int(row[0])+1} | {row[2]} ---------- {row[1]}")
             
@@ -184,13 +185,13 @@ async def paster(page, DEBUG:bool = False):
             await page.locator("//html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div/div[3]/div[3]/div/div/div/div[1]/div/span/span").click() # Clicking on "Post" button
             
             await asyncio.sleep(time[3])
-            print(f"[{await timestamp()}] Completed group n°{int(row[0])+1} in {sum(time)}")
+            print(f"[{await timestamp()}] Completed group n°{int(row[0])+1} in {total_time:.2f}")
             time_list.append(sum(time))
             ok_counter += 1
             
         except Exception as e:
             if row[0] != "":
-                print(f"[{await timestamp()}] Group n° {int(row[0])+1}, (Group {row[0]} in .CSV) failed after {sum(float(f"{time:.2f}"))}.\n\n {e}")
+                print(f"[{await timestamp()}] Group n° {int(row[0])+1}, (Group {row[0]} in .CSV) failed after {total_time:.2f}.\n\n {e}")
                 time_list.append(sum(time))
                 error_counter += 1
             continue
