@@ -1,7 +1,7 @@
 <div align="center">
-  <h2>Explanation</h2>
+  <h2>Info</h2>
   <br>
-  <p> CURRENT VERSION V1.4.3<br><br>Must have a .jpg/.png/.gif/.mp4/.wav/.webm file in the same folder of the main.py for posting multimedia (doesn't care the name of the file), a "mensaje.txt" or "msg.txt" file where to paste the Message to post and a "grupos.txt" or "groups.txt" file where to paste the groups URLs per line</p>
+  <p>Facebook group posting automation, useful for advertising.</p>
 </div>
 
 <div>
@@ -9,13 +9,10 @@
   <br>
   <ul>
     <li>More optimization</li>
-    <li>Avoiding Anti-Bot system changing between many pics/texts randomly</li>
+    <li>Improving DEBUG system</li>
     <li>GUI for Friendly Use</li>
     <li>Full linux support</li>
     <li>Language selector (ENG/ESP)</li>
-    <li>Selector for many platforms (may be)</li>
-    <li>AI integration (may be)</li>
-    <li>Being capable of full automation at Windows boot</li>
   </ul>
 </div>
 
@@ -28,7 +25,7 @@
 <div align="center">
   <h2 align="center" style= font-size:1.75em><em>Contact</em></h2>
   <br>
-  <h3><a href="discord.gg/Q2KuwbXaJc">FG .Teams Discord</h3>
+  <h3><a href="discord.gg/Q2KuwbXaJc">Discord</h3>
   <h3><a href="mailto:fran.nesgaitan15@gmail.com">E-Mail</h3>
   <br>
   <p>Feel free to ask anything without a problem</p>
