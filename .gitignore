@@ -4,6 +4,7 @@ venv/
 __pycache__/
 *.pyc
 /EJECUTABLE/
+*.bat
 
 ### CREDENTIALS OR SENSITIVE DATA ###
 *.env

@@ -10,7 +10,7 @@ groups_q= 0
 
 
 # Main code, it defines the browser agent and manages the scripts running.
-async def web(headless:bool = True, DEBUG:bool = False):
+async def web(headless:bool = True, DEBUG:bool = False, AUTOPROF:bool = False):
     """Main code function, it defines the main browser agent and manages the other scripts for posting on every group found in groups list."""
     
     if DEBUG:
@@ -44,13 +44,19 @@ async def web(headless:bool = True, DEBUG:bool = False):
             
             # Check if cookies are useful (No Anti-Automation algorithm interfered)
             try:
-                await profile_chooser(page, DEBUG)
+                if AUTOPROF:
+                    await auto_profile(page, DEBUG)
+                else:
+                    await profile_chooser(page, DEBUG)
             except Exception as e:
                 if DEBUG:
                     raise e
                 await cookies_updater(DEBUG)
                 await cookies(page, DEBUG)
-                await profile_chooser(page, DEBUG)
+                if AUTOPROF:
+                    await auto_profile(page, DEBUG)
+                else:
+                    await profile_chooser(page, DEBUG)
                 
             await random_sleeper()
             
@@ -66,6 +72,23 @@ async def web(headless:bool = True, DEBUG:bool = False):
             
             
             
+async def auto_profile(page, DEBUG:bool = False):
+    """Selects the profile by itselfs by looking in credentials.env file for AUTOPROF key."""
+    
+    if DEBUG:
+        await DEBUG_FUNC()
+    prof = page.locator("//div[@aria-label='Your profile']")
+    await prof.wait_for(timeout=15000)
+    await prof.click()
+    
+    prof_list = page.locator("//html/body/div[1]/div/div[1]/div/div[2]/div[5]/div[2]/div/div[2]/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div[1]/div[1]/div/div/div[1]/div[@role='list']")
+    await prof_list.wait_for(timeout=15000)
+    
+    profile = page.locator(f'//div[contains(@aria-label, "Switch to {os.environ.get("AUTOPROF_ELEMENT")}")]')
+    await profile.wait_for(timeout=15000)
+    await profile.click()
+
+
 
 # Scripting for choosing profile    
 async def profile_chooser(page, DEBUG:bool = False):
