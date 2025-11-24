@@ -24,7 +24,6 @@
 
 <div align="center">
   <h2 align="center" style= font-size:1.75em><em>Contact</em></h2>
-  <br>
   <h3><a href="discord.gg/Q2KuwbXaJc">Discord</h3>
   <h3><a href="mailto:fran.nesgaitan15@gmail.com">E-Mail</h3>
   <br>
