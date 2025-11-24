@@ -1,5 +1,5 @@
 import asyncio, random, csv, re, math, pandas as pd
-from playwright.async_api import async_playwright
+from playwright.async_api import async_playwright, Error
 from playwright_stealth import Stealth
 if __name__ != "__main__":
     from modules.misc import *
@@ -136,12 +136,15 @@ async def group_loader(page, DEBUG:bool = False):
     global groups_q
     
     await page.goto("https://www.facebook.com/groups/joins")
-    group_amount_text = await page.locator("//html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div/span/div/div[1]/h2/span/span").inner_text()
+    group_amount_text = await page.locator("//html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div/span/div/div[1]/h2/span/span[contains(text(), 'All groups you')]").inner_text()
     group_amount = re.split(r"[\(\)]", group_amount_text)
     groups_q = int(group_amount[1])
-    
-    group_list = page.locator("//html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div[3]")
-    await group_list.wait_for()
+    try:
+        group_list = page.locator("//html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div[3]")
+        await group_list.wait_for()
+    except Error:
+        group_list = page.locator("//html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div/div[2]/div[3]")
+        await group_list.wait_for()
     
     
     while True:
