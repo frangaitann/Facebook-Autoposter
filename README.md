@@ -1,4 +1,11 @@
 <div align="center">
+  <h1>OLD REPOSITORIES</h1>
+  <p>This repository is quite old, i have new repositories being finalized for a better lecture and understanding. I decided to keep some of my old repositories public just for proving that i'm not an AI user or a fake developer, feel free to use this repositories or ask about them but keep this on your mind.</p>
+
+<br><br><br>
+
+
+<div align="center">
   <h2>Info</h2>
   <br>
   <p>Facebook group posting automation, useful for advertising.</p>
